@@ -9,13 +9,36 @@ static void Groceries()
     while (true)
     {
         // Ask what item to put into the list
-        Console.WriteLine("Input an item for your grocery list: ");
+        Console.WriteLine("Input an item for your grocery list or a number to remove an item: ");
         // Read the input value
         string readItem = Console.ReadLine()!;
         if (string.IsNullOrWhiteSpace(readItem))
         {
             Console.WriteLine("Could not register, input a new item again: ");
             continue;
+        }
+        // when the user wants to remove an item
+        else if (int.TryParse(readItem, out int readRemoveItem))
+        {
+            // take the input value minus 1 since a list starts at zero and not one
+            int removeIndex = readRemoveItem - 1;
+            if (removeIndex >= 0 && removeIndex < items.Count)
+            {
+                items.RemoveAt(removeIndex);
+                prices.RemoveAt(removeIndex);
+                Console.WriteLine("\nGrocery List");
+                // Print out the whole list
+                for (int i = 0; i < items.Count; i++)
+                {
+                    // i + 1 to make the list print out start value 1 instead of zero
+                    Console.WriteLine($"{i + 1}. {items[i]} - {prices[i]} kr");
+                }
+                continue;
+            }
+            else
+            {
+                Console.WriteLine("That number does not exist on the list.");
+            }
         }
         else
         {
@@ -39,7 +62,6 @@ static void Groceries()
             }
         }
         Console.Clear();
-
         Console.WriteLine("\nGrocery List");
         // Print out the whole list
         for (int i = 0; i < items.Count; i++)
