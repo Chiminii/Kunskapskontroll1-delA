@@ -8,8 +8,16 @@ static void Groceries()
 
     while (true)
     {
+        Console.Clear();
+        Console.WriteLine("\nGrocery List");
+        // Print out the whole list
+        for (int i = 0; i < items.Count; i++)
+        {
+            // i + 1 to make the list print out start value 1 instead of zero
+            Console.WriteLine($"{i + 1}. {items[i]} - {prices[i]} kr");
+        }
         // Ask what item to put into the list
-        Console.WriteLine("Input an item for your grocery list or a number to remove an item: ");
+        Console.WriteLine("\nInput an item for your grocery list or a number to remove an item: ");
         // Read the input value
         string readItem = Console.ReadLine()!;
         if (string.IsNullOrWhiteSpace(readItem))
@@ -26,23 +34,17 @@ static void Groceries()
             {
                 items.RemoveAt(removeIndex);
                 prices.RemoveAt(removeIndex);
-                Console.WriteLine("\nGrocery List");
-                // Print out the whole list
-                for (int i = 0; i < items.Count; i++)
-                {
-                    // i + 1 to make the list print out start value 1 instead of zero
-                    Console.WriteLine($"{i + 1}. {items[i]} - {prices[i]} kr");
-                }
                 continue;
             }
             else
             {
                 Console.WriteLine("That number does not exist on the list.");
+                continue;
             }
         }
         else
         {
-            items.Add(readItem);
+            //items.Add(readItem);
             // Console.WriteLine($"{count++}. {readItem} has been added to the grocery list.");
 
         }
@@ -52,22 +54,17 @@ static void Groceries()
             Console.WriteLine($"Input a price for the {readItem}: ");
             if (int.TryParse(Console.ReadLine(), out readPrice))
             {
+                items.Add(readItem);
                 prices.Add(readPrice);
                 // Console.WriteLine($"It costs {readPrice} kr");
                 break;
             }
             else
             {
-                Console.WriteLine("Could not register, input a new price again: ");
+                Console.WriteLine("\nCould not register, item was not added. Press Enter to add an item again");
+                Console.ReadLine();
+                break;
             }
-        }
-        Console.Clear();
-        Console.WriteLine("\nGrocery List");
-        // Print out the whole list
-        for (int i = 0; i < items.Count; i++)
-        {
-            // i + 1 to make the list print out start value 1 instead of zero
-            Console.WriteLine($"{i + 1}. {items[i]} - {prices[i]} kr");
         }
     }
 }
